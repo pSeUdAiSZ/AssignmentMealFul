@@ -108,45 +108,68 @@ const myChart = new Chart(ctx, {
         onClick:function(e){
             var gtx = document.getElementById('newChart').getContext('2d')
             const scheduledTimesTime=[];
+            const sche_dates = prompt("Enter the Scheduled_date");
+
             for (let index = 0; index < scheduledTimes.length; index++) {
                 const element = scheduledTimes[index]
-                let myTime = element.substr(11, 19);
+                if (sche_dates==element.substr(0,10)) {
+                    let myTime = element.substr(11, 19);
                 scheduledTimesTime.push(myTime);
-                
+                    
+                }
             }
-            console.log(scheduledTimesTime);
+            
             function onlyUnique(value, index, self) {
                 return self.indexOf(value) === index;
               }
               const scheduledTimesTimeA=scheduledTimesTime.filter(onlyUnique);
-              console.log(scheduledTimesTimeA)
+              console.log(typeof scheduledTimesTimeA[0]);
+              const scheduledTimesTimeAH=[]
+              for (let index = 0; index < scheduledTimesTimeA.length; index++) {
+                  const element = scheduledTimesTimeA[index].substr(0,2);
+                  scheduledTimesTimeAH[index]=element;
+                  
+                  
+              }
+              
 
-            function counT(abc) {
-                let count=0;
-                for (let index = 0; index < scheduledTimesTime.length;index++) {
-                    if (scheduledTimesTime[index]==abc) {
-                        count++;
-                    }
-                    
-            }
-            return count;
-            }
-            for (let index = 0; index < scheduledTimesTime.length; index++) {
-                const element = scheduledTimesTimeA[index];
-        const elem = counT(element);
-        data.push(elem);
+            
+            
+            
+            let datsAC=[];
+            let countM=0,countA=0,countE=0,countN=0;
+            for (let index = 0; index < scheduledTimesTimeAH.length; index++) {
+                let hrs = scheduledTimesTimeAH[index]
+                let hours = parseInt(hrs);
+                if(hours >= 09 && hours < 12)
+                {
+                    countM++
+                }
+                else if(hours >= 12 && hours <15)
+                {
+                    countA++;
+                }
+                else if(hours>=15 && hours < 18)
+                {
+                    countE++;
+                }
+                else{
+                    countN++;
+                }
                 
             }
+            datsAC=[countM,countA,countE,countN];
+            console.log(datsAC)
 
 
 
             const newChart =new Chart(gtx, {
                 type: 'bar',
                 data: {
-                    labels: scheduledTimesTime,
+                    labels: ["Morning(9 A.M - 12 A.M)","Afternoon(12 P.M - 3 P.M)","Evening(3 P.M - 6 P.M)","Night(6 P.M - 9 P.M)" ],
                     datasets: [{
                         label: '# of schedules',
-                        data: data,
+                        data: datsAC,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
